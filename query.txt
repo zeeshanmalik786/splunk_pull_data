@@ -1,0 +1,4 @@
+search index="legacy_gtw_intervals_lvl7"  earliest=-10h@h latest=-9h@h HOUSEHOLD_WHIX != "None"
+             | fields GW_MAC_ADDRESS HOUSEHOLD_WHIX _time
+             | eval HOUSEHOLD_WHIX=if(HOUSEHOLD_WHIX < 0, 1, if(HOUSEHOLD_WHIX >= 100, 100, HOUSEHOLD_WHIX))
+             | stats  first(HOUSEHOLD_WHIX) as HOUSEHOLD_WHIX by GW_MAC_ADDRESS _time
